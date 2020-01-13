@@ -4,15 +4,21 @@
 
 ### Hard disc encryption
 
-Go to `System preferences > Security & Privacy > FileVault` and make sure the FileVault is ON.
+Go to `System Preferences > Security & Privacy > FileVault` and make sure the FileVault is ON.
 
 ### Firewall
 
-Go to `System preferences > Security & Privacy > Firewall` and make sure the Firewall is ON.
+Go to `System Preferences > Security & Privacy > Firewall` and make sure the Firewall is ON.
+
+### Require password after sleep
+
+Go to `System Preferences > Security & Privacy > General` and set `Require password after sleep or screen saver begins`
+to `immediately` or `5 seconds`.
 
 ### More
 
-https://blog.bejarano.io/hardening-macos.html
+* https://blog.bejarano.io/hardening-macos.html
+* https://github.com/drduh/macOS-Security-and-Privacy-Guide
 
 ## Keyboard preferences
 
@@ -24,54 +30,95 @@ In `System preferences > Keyboard`:
 
 ## Apps
 
-#### Text editor
-
-Install VS Code: https://code.visualstudio.com/
-
-##### Configuration
-
-Open VS Code, go to `Code` > `Preferences` > `Settings` and paste:
-
-```yml
-{
-    "editor.rulers": [
-        120
-    ],
-    "editor.tabSize": 2,
-    "workbench.colorTheme": "One Monokai",
-    "explorer.confirmDragAndDrop": false,
-    "explorer.confirmDelete": false,
-    "workbench.startupEditor": "newUntitledFile",
-    "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true,
-    "files.trimFinalNewlines": true,
-    "terminal.integrated.fontFamily": "Meslo LG S DZ for Powerline",
-}
-```
-
-Install `One Monokai` extension.
-
-#### Web browser
+### Web browser
 
 Install Chrome: https://www.google.com/chrome/browser/desktop/index.html
 
-#### Terminal
+#### Extensions I recommend
+
+##### Security / privacy
+
+* [ublock-origin](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
+* [https-everywhere](https://chrome.google.com/webstore/detail/https-everywhere/gcbommkclmclpchllfjekcdonpmejbdp)
+* [privacy-badger](https://chrome.google.com/webstore/detail/privacy-badger/pkehgijcmpdhfbdbbnkijodmdjhbjlgp)
+
+##### Utilities
+
+* [full-page-screen-capture](https://chrome.google.com/webstore/detail/full-page-screen-capture/fdpohaocaechififmbbbbbknoalclacl)
+
+### Text editor
+
+Install VS Code: https://code.visualstudio.com/
+
+#### Configuration
+
+Open VS Code and:
+
+* press `Cmd + p`, type `> Shell Command: Install 'code' command in Path` and press `Enter`,
+
+* press `Cmd + p`, type `> Preferences: Open Settings (JSON)`, press `Enter`, and paste the following
+settings to `settings.json`:
+
+  ```yml
+  {
+      "editor.rulers": [
+          120
+      ],
+      "editor.tabSize": 2,
+      "explorer.confirmDragAndDrop": false,
+      "explorer.confirmDelete": false,
+      "workbench.startupEditor": "newUntitledFile",
+      "files.insertFinalNewline": true,
+      "files.trimTrailingWhitespace": true,
+      "files.trimFinalNewlines": true,
+      "editor.autoClosingBrackets": "never",
+      "editor.autoClosingOvertype": "never",
+      "editor.autoClosingQuotes": "never",
+      "terminal.integrated.fontFamily": "Meslo LG S DZ for Powerline",
+  }
+  ```
+
+### GPG Suite
+
+https://gpgtools.org/#gpgsuite
+
+### Other useful apps
+
+* [Spectacle](https://www.spectacleapp.com/)
+* [Monosnap](https://monosnap.com/welcome)
+* [Alfred](https://www.alfredapp.com/)
+* [GitHub Desktop](https://desktop.github.com/)
+* [MenuMeters](https://member.ipmu.jp/yuji.tachikawa/MenuMetersElCapitan/)
+
+## Terminal
+
+### iTerm2
 
 Install iTerm2: https://www.iterm2.com/downloads.html
 
-#### Software package manager
+### Software package manager
 
-Install Homebrew: http://brew.sh/
+Install [Homebrew]:
 
-#### Basic tools
+```shell
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+And then, run:
+
+```shell
+brew analytics off
+```
+
+### Basic tools
 
 Install some useful packages:
 
 ```shell
-brew install curl mc gpg gpg2
+brew install curl mc
 ```
 
-#### Git
+### Git
 
 Install Git:
 
@@ -88,7 +135,7 @@ git config --global user.email "email@example.com"
 
 :warning: Don't forget to replace _"Mona Lisa"_ and _"email@example.com"_ with your own data.
 
-#### Shell
+### Shell
 
 Install [Zsh] and set it as a default shell:
 
@@ -105,14 +152,14 @@ Install [Oh My Zsh]:
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-#### Make your terminal look pretty
+### Make your terminal look pretty
 
-##### Use Dark Background in iTerm2
+#### Use Dark Background in iTerm2
 
 * Go to: `iTerm2 > Preferences > Profiles > Colors`
 * Use `Color presets...` menu to import and select downloaded `Pastel (Dark Background)` theme
 
-##### Install [Powerline Fonts]
+#### Install [Powerline Fonts]
 
 ```shell
 cd $HOME
@@ -121,12 +168,12 @@ git clone https://github.com/powerline/fonts.git
 rm -rf ~/fonts/
 ```
 
-##### Set font in iTerm2
+#### Set font in iTerm2
 
 * Go to: `iTerm2 > Preferences > Profiles > Text > Font > Change Font`
 * Select the font: `Fixed Width > Meslo LG S DZ for Powerline > RegularForPowerline > 11`
 
-##### Set [zsh theme]
+#### Set [zsh theme]
 
 Edit `~/.zshrc` file and update `ZSH_THEME=` to:
 
@@ -134,18 +181,12 @@ Edit `~/.zshrc` file and update `ZSH_THEME=` to:
 ZSH_THEME="agnoster"
 ```
 
-#### Configure Zsh
-
-Install [zsh-autosuggestions]:
-
-```shell
-git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
-```
+### Configure Zsh
 
 Edit `~/.zshrc` file and update `plugins=` to:
 
 ```shell
-plugins=(git bundler osx rake ruby rails zsh-autosuggestions fasd)
+plugins=(git rails)
 ```
 
 :mortar_board: List of all available plugins is here: https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins.
@@ -171,13 +212,57 @@ setopt HIST_SAVE_NO_DUPS        # don't save duplicates
 setopt INC_APPEND_HISTORY       # write after each command
 setopt SHARE_HISTORY            # share history between sessions
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=30'
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
+# homebrew
+export HOMEBREW_NO_ANALYTICS=1
+export HOMEBREW_NO_INSECURE_REDIRECT=1
+export HOMEBREW_CASK_OPTS=--require-sha
 ```
 
-#### Vim
+#### zsh-autosuggestions
+
+Install [zsh-autosuggestions]:
+
+```shell
+git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+```
+
+Edit `~/.zshrc` file and add `zsh-autosuggestions` to `plugins=` list:
+
+```shell
+plugins=(.... zsh-autosuggestions)
+```
+
+Edit `~/.zshrc` file and the following lines at the end:
+
+```shell
+# zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=30'
+```
+
+#### zsh-syntax-highlighting and zsh-history-substring-search
+
+Install [zsh-syntax-highlighting] and [zsh-history-substring-search]:
+
+```shell
+brew install zsh-syntax-highlighting zsh-history-substring-search
+```
+
+Edit `~/.zshrc` file and the following lines at the end:
+
+```shell
+# zsh-syntax-highlighting (must be the last plugin sourced)
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# zsh-history-substring-search (must be sourced after zsh-syntax-highlighting)
+source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+```
+
+### Vim
 
 Install [Janus Vim Distribution]:
 
@@ -191,46 +276,92 @@ Map `jj` to `esc`:
 echo ':imap jj <Esc>' >> ~/.vimrc.before
 ```
 
-### Another apps I recommend
+### exa
 
-* [Alfred](https://www.alfredapp.com/)
-* [Spectacle](https://www.spectacleapp.com/)
-* [Monosnap](https://monosnap.com/welcome)
+Install [exa]:
 
-### RoR & web development
+```shell
+brew install exa
+```
 
-#### PostgreSQL
+Edit `~/.zshrc` file and the following lines at the end:
+
+```shell
+# exa
+alias l="exa -l -a -a --git --time-style=long-iso --group-directories-first"
+```
+
+## RoR & web development
+
+### PostgreSQL
 
 ```shell
 brew install postgresql
 brew services start postgresql
 ```
 
-#### Redis
+### Redis
 
 ```shell
 brew install redis
 brew services start redis
 ```
 
-#### Node Version Manager
+### Version Manager with support for Ruby, Node.js, Elixir, Erlang & more
 
-Install NVM: https://github.com/creationix/nvm
-
-##### Install yarn
+Install [asdf-vm](https://asdf-vm.com/#/core-manage-asdf-vm):
 
 ```shell
-npm install -g yarn
+brew install asdf
+echo -e "\n. $(brew --prefix asdf)/asdf.sh" >> ~/.zshrc
+echo -e "\n. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.zshrc
 ```
 
-#### Ruby version manager
+#### Install multiple languages
 
-Install RVM: https://rvm.io/rvm/install
+```shell
+# install last version of Ruby
+asdf plugin-add ruby
+asdf install ruby 2.7.0
+asdf global ruby 2.7.0
 
+# install last version of Erlang (required for Elixir)
+brew install wxmac         # for building with wxWidgets (required to start observer or debugger)
+asdf plugin-add erlang
+asdf install erlang 22.2.1
+asdf global erlang 22.2.1
+
+# install last version of Elixir
+asdf plugin-add elixir
+asdf install elixir 1.9.4
+asdf global elixir 1.9.4
+
+# install last version of Node JS
+asdf plugin-add nodejs
+asdf install nodejs 13.5.0
+asdf global nodejs 13.5.0
+```
+
+#### Updating versions in the future
+
+```shell
+# to display the list of available versions, update plugins and use `list-all`, ex:
+asdf plugin-update --all
+asdf list-all ruby
+```
+
+### Sample config for [rubocop] gem
+
+Check it here: [.rubocop.yml](.rubocop.yml).
+
+[Homebrew]: https://brew.sh/
 [Zsh]: http://www.zsh.org/
 [Oh My Zsh]: https://github.com/robbyrussell/oh-my-zsh
 [Powerline Fonts]: https://github.com/powerline/fonts
 [zsh theme]: https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-[Solarized Theme]: http://ethanschoonover.com/solarized
 [zsh-autosuggestions]: https://github.com/zsh-users/zsh-autosuggestions
 [Janus Vim Distribution]: https://github.com/carlhuda/janus
+[exa]: https://the.exa.website/
+[zsh-syntax-highlighting]: https://github.com/zsh-users/zsh-syntax-highlighting
+[zsh-history-substring-search]: https://github.com/zsh-users/zsh-history-substring-search
+[rubocop]: https://github.com/rubocop-hq/rubocop
